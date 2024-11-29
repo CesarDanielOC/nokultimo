@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block cuerpo %}
+
+<div class="row"> <!--La fila-->
+    
+    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4"> <!-- Columna Izquierda-->
+        <center><h1>Paciente</h1>
+
+        <div class="card"> <!-- La tarjeta -->
+            <div class="card-body">
+                <form action="registrarPaciente/" method="POST"> {% csrf_token %} 
+                    <div class="form-group py-2">
+                        <input type="text" id="numidpaciente" name="numidpaciente" class="form-control" placeholder="Id Paciente" minlength="1" maxlength="6" required>
+                    </div>
+
+                    <div class="form-group py-2">
+                        <input type="text" id="numidproducto" name="numidproducto" class="form-control" placeholder="Id Producto" maxlength="100" required>  <!-- Campo agregado -->
+                    </div>
+
+                    <div class="form-group py-2">
+                        <input type="text" id="numidcliente" name="numidcliente" class="form-control" placeholder="Id Cliente" maxlength="100" required>  <!-- Campo agregado -->
+                    </div>
+
+                    <div class="form-group py-2">
+                        <input type="text" id="numcalificacion" name="numcalificacion" class="form-control" placeholder="Calificación" maxlength="10" required> <!-- Campo agregado -->
+                    </div>
+
+                    <div class="form-group py-2">
+                        <input type="text" id="txtcomentario" name="txtcomentario" class="form-control" placeholder="Comentario" maxlength="100" required>  <!-- Campo agregado -->
+                    </div>
+
+                    <div class="form-group py-2">
+                        <!-- Campo de fecha modificado para usar un input de tipo date -->
+                        <input type="date" id="txtfechareseña" name="txtfechareseña" class="form-control" required> <!-- Campo de fecha -->
+                    </div>
+
+                    <div class="form-group py-2">
+                        <input type="text" id="txtestado" name="txtestado" class="form-control" placeholder="Estado" maxlength="100" required>  <!-- Campo agregado -->
+                    </div>
+
+                    <div class="form-group py-2">
+                    <center><button type="submit" class="btn btn-dark">Ingresar Paciente al Hospital</button></center>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- La tarjeta -->
+
+    </div> <!-- Columna Izquierda-->
+
+    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8"> <!-- Columna derecha -->
+        <center><h1>Pacientes</h1>
+        
+
+        <!-- La tabla -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Calificación</th>
+                    <th scope="col">Comentario</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in mispacientes %}
+                    <tr>
+                        <td> {{p.id_paciente}} </td>
+                        <td> {{p.id_producto}} </td> <!-- Cambié el nombre aquí -->
+                        <td> {{p.id_cliente}} </td>  <!-- Cambié el nombre aquí -->
+                        <td> {{p.calificacion}} </td> <!-- Cambié el nombre aquí -->
+                        <td> {{p.comentario}} </td>  <!-- Cambié el nombre aquí -->
+                        <td> {{ p.fecha_reseña|date:"Y/m/d" }} </td>  <!-- Solo muestra la fecha -->
+                        <td> {{p.estado}} </td>  <!-- Cambié el nombre aquí -->
+                        <td><a href="seleccionarPaciente/{{p.id_paciente}}" class="btn btn-secondary">Editar</a></td>
+                        <td><a href="borrarPaciente/{{p.id_paciente}}" class="btn btn-dark">Borrar</a></td> 
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <!-- La tabla -->
+    </div> <!-- Columna derecha -->
+
+</div> <!--La fila-->
+{% endblock %}
